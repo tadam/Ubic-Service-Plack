@@ -4,6 +4,6 @@
 /*.substvars
 /*.debhelper.log
 /files
-/yandex-ubic
+/libubic-service-psgi-perl
 /stamp-makefile-build
 /stamp-makefile-check
