@@ -88,6 +88,12 @@ Path to stderr log of plackup.
 
 User name. If specified, real and effective user identifiers will be changed before execing any psgi applications.
 
+=item I<pidfile> (optional)
+
+Pidfile for C<Ubic::Daemon> module.
+
+If not specified, it will be derived from I<app_name>.
+
 =back
 
 =back
@@ -111,9 +117,10 @@ sub new {
         ubic_log    => { type => SCALAR, optional => 1 },
         stdout      => { type => SCALAR, optional => 1 },
         stderr      => { type => SCALAR, optional => 1 },
+        pidfile     => { type => SCALAR, optional => 1 },
     });
 
-    my $pidfile = "/tmp/$params->{app_name}.pid";
+    my $pidfile = $params->{pidfile} || "/tmp/$params->{app_name}.pid";
 
     my $self = $class->SUPER::new({
         start => sub {

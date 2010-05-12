@@ -1,3 +1,9 @@
+libubic-service-psgi-perl (1.0.1) unstable; urgency=low
+
+  * customizable pidfile.
+
+ -- Vyacheslav Matjukhin (No comments) <mmcleric@yandex-team.ru>  Tue, 11 May 2010 19:33:36 +0400
+
 libubic-service-psgi-perl (1.0.0) unstable; urgency=low
 
   * Initial release (separated from main ubic distribution).
