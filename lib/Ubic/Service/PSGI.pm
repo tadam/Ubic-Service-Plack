@@ -17,6 +17,7 @@ Ubic::Service::PSGI - service wrapper for psgi applications
         app      => "/var/www/app.psgi",
         app_name => 'app',
         status   => sub { ... },
+        port     => 4444,
         ubic_log => '/var/log/app/ubic.log',
         stdout   => '/var/log/app/stdout.log',
         stderr   => '/var/log/app/stderr.log',
@@ -30,6 +31,8 @@ This service is a common ubic wrap for psgi applications. It uses plackup for ru
 =cut
 
 use base qw(Ubic::Service::Common);
+
+use Yandex::Version '{{DEBIAN_VERSION}}';
 
 use Params::Validate qw(:all);
 
@@ -71,6 +74,10 @@ Name of your application (uses for constructing path for storing pid-file of you
 =item I<status> (optional)
 
 Coderef to special function, that will check status of your application.
+
+=item I<port> (optional)
+
+Port on which your application works. Ubic-ping will use this info for HTTP status checking of your application.
 
 =item I<ubic_log> (optional)
 
@@ -114,6 +121,7 @@ sub new {
         server_args => { type => HASHREF, default => {} },
         user        => { type => SCALAR, optional => 1 },
         status      => { type => CODEREF, optional => 1 },
+        port        => { type => SCALAR, regex => qr/^\d+$/, optional => 1 },
         ubic_log    => { type => SCALAR, optional => 1 },
         stdout      => { type => SCALAR, optional => 1 },
         stderr      => { type => SCALAR, optional => 1 },
@@ -122,7 +130,7 @@ sub new {
 
     my $pidfile = $params->{pidfile} || "/tmp/$params->{app_name}.pid";
 
-    my $self = $class->SUPER::new({
+    my $options = {
         start => sub {
             my %args = (
                 %{$PSGI_SERVER_ARGS},
@@ -158,7 +166,13 @@ sub new {
         },
         user => $params->{user} || 'root',
         timeout_options => { start => { trials => 15, step => 0.1 }, stop => { trials => 15, step => 0.1 } },
-    });
+    };
+
+    if ($params->{port}) {
+        $options->{port} = $params->{port};
+    }
+
+    my $self = $class->SUPER::new($options);
 
     return $self;
 }
