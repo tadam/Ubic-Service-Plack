@@ -7,9 +7,8 @@ use Test::More tests => 4;
 
 use lib 'lib';
 
-use Yandex::X;
-xsystem('rm -rf tfiles');
-xsystem('mkdir tfiles');
+system('rm -rf tfiles') and die "Can't remove tfiles: $!";
+system('mkdir tfiles') and die "Can't create tfiles: $!";
 
 use Ubic::Service::Plack;
 use LWP::Simple;
