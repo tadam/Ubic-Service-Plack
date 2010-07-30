@@ -35,6 +35,7 @@ This service is a common ubic wrap for psgi applications. It uses plackup for ru
 use base qw(Ubic::Service::Common);
 
 use Params::Validate qw(:all);
+use Plack;
 
 use Ubic::Daemon qw(:all);
 use Ubic::Service::Common;
