@@ -7,12 +7,12 @@ use warnings;
 
 =head1 NAME
 
-Ubic::Service::PSGI - ubic service base class for psgi applications
+Ubic::Service::Plack - ubic service base class for psgi applications
 
 =head1 SYNOPSIS
 
-    use Ubic::Service::PSGI;
-    return Ubic::Service::PSGI->new({
+    use Ubic::Service::Plack;
+    return Ubic::Service::Plack->new({
         server => "FCGI",
         server_args => { listen => "/tmp/app.sock",
                          nproc  => 5 },
@@ -173,9 +173,10 @@ sub defaults {
     return ();
 }
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Yury Zavarin <tadam@yandex-team.ru>
+Yury Zavarin <yury.zavarin@gmail.com>
+Vyacheslav Matjukhin <mmcleric@yandex-team.ru>
 
 =cut
 
