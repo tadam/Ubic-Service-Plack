@@ -1,2 +1,10 @@
 /tfiles
 /man
+/Ubic-Service-Plack*
+/.build
+/*.dsc
+/*.tar.gz
+/*.build
+/*.deb
+/*.changes
+/*.upload

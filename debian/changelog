@@ -1,3 +1,10 @@
+libubic-service-plack-perl (1.10) UNRELEASED; urgency=low
+
+  * package renamed to Ubic::Service::Plack
+  * opensource cleanup
+
+ -- Vyacheslav Matjukhin (No comments) <mmcleric@yandex-team.ru>  Fri, 30 Jul 2010 21:41:36 +0400
+
 libubic-service-psgi-perl (1.0.2) unstable; urgency=low
 
   * support 'port' param in constructor

@@ -11,11 +11,11 @@ use Yandex::X;
 xsystem('rm -rf tfiles');
 xsystem('mkdir tfiles');
 
-use Ubic::Service::PSGI;
+use Ubic::Service::Plack;
 use LWP::Simple;
 
 my $port = 5001;
-my $service = Ubic::Service::PSGI->new({
+my $service = Ubic::Service::Plack->new({
     server => 'Standalone',
     server_args => { port => $port },
     app => 't/bin/test.psgi',
@@ -33,6 +33,7 @@ my $service = Ubic::Service::PSGI->new({
     stdout => 'tfiles/stdout.log',
     stderr => 'tfiles/stderr.log',
     user => $ENV{LOGNAME},
+    pidfile => 'tfiles/test_psgi.pid',
 });
 
 $service->start;
