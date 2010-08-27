@@ -1,3 +1,15 @@
+libubic-service-plack-perl (1.11.1) unstable; urgency=low
+
+  * libubic-service-plack-perl conflicts with old libubic-service-psgi-perl
+
+ -- Yury Zavarin <tadam@yandex-team.ru>  Fri, 27 Aug 2010 19:20:09 +0400
+
+libubic-service-plack-perl (1.11) unstable; urgency=low
+
+  * add Plack to deps (for CPAN package)
+
+ -- Yury Zavarin <tadam@yandex-team.ru>  Fri, 27 Aug 2010 19:09:52 +0400
+
 libubic-service-plack-perl (1.10) UNRELEASED; urgency=low
 
   * package renamed to Ubic::Service::Plack

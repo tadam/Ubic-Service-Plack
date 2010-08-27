@@ -23,7 +23,7 @@ Ubic::Service::Plack - ubic service base class for psgi applications
         ubic_log => '/var/log/app/ubic.log',
         stdout   => '/var/log/app/stdout.log',
         stderr   => '/var/log/app/stderr.log',
-        user     => "ppb",
+        user     => "www-data",
     });
 
 =head1 DESCRIPTION

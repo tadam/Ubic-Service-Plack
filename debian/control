@@ -11,6 +11,7 @@ Section: perl
 Priority: optional
 Architecture: all
 Depends: ${perl:Depends}, libparams-validate-perl, libplack-perl, ubic
+Conflicts: libubic-service-psgi-perl (< 1.10)
 Description: ubic service wrapper for psgi applications
  The Ubic::Service::Plack module is a helper for running psgi applications
  with ubic and plackup.
