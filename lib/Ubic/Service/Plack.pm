@@ -175,5 +175,11 @@ sub defaults {
     return ();
 }
 
+=head1 FUTURE DIRECTIONS
+
+Some kind of basic HTTP/socket (depending on server type) ping in status phase would be handy.
+
+=cut
+
 1;
 
