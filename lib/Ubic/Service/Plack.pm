@@ -175,13 +175,5 @@ sub defaults {
     return ();
 }
 
-=head1 AUTHORS
-
-Yury Zavarin <yury.zavarin@gmail.com>
-
-Vyacheslav Matjukhin <mmcleric@yandex-team.ru>
-
-=cut
-
 1;
 
