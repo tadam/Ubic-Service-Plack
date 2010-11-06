@@ -16,7 +16,7 @@ use LWP::Simple;
 my $port = 5001;
 my $service = Ubic::Service::Plack->new({
     server => 'Standalone',
-    server_args => { port => $port },
+    port => 5001,
     app => 't/bin/test.psgi',
     app_name => 'test_psgi',
     status => sub {

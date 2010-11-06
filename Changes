@@ -1,6 +1,7 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+        Pass 'port' option to plackup.
 
 1.11    Sat Jul 31, 2010
         Add Plack into CPAN deps.

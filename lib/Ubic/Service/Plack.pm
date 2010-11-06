@@ -128,6 +128,7 @@ sub new {
             my %args = (
                 $class->defaults,
                 server => $params->{server},
+                ($params->{port} ? (port => $params->{port}) : ()),
                 %{$params->{server_args}},
             );
             my @cmd = ("plackup");
@@ -177,6 +178,7 @@ sub defaults {
 =head1 AUTHORS
 
 Yury Zavarin <yury.zavarin@gmail.com>
+
 Vyacheslav Matjukhin <mmcleric@yandex-team.ru>
 
 =cut
