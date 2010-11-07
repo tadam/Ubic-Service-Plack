@@ -15,6 +15,11 @@ This package got renamed into L<Ubic::Service::Plack> and will be removed soon.
 
 =cut
 
+
+=for Pod::Coverage defaults
+
+=cut
+
 sub defaults {
     return (
         env => 'deployment',

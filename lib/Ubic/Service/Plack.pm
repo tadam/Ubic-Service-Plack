@@ -171,6 +171,11 @@ sub new {
     return $self;
 }
 
+
+=for Pod::Coverage defaults
+
+=cut
+
 sub defaults {
     return ();
 }
