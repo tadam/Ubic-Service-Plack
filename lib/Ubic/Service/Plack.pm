@@ -104,6 +104,8 @@ If not specified, it will be derived from I<app_name>.
 
 =cut
 
+my $plackup_command = $ENV{'UBIC_SERVICE_PLACKUP_BIN'} || 'plackup';
+
 sub new {
     my $class = shift;
 
@@ -131,7 +133,7 @@ sub new {
                 ($params->{port} ? (port => $params->{port}) : ()),
                 %{$params->{server_args}},
             );
-            my @cmd = ("plackup");
+            my @cmd = split(/\s+/, $plackup_command);
             foreach my $key (keys %args) {
                 push @cmd, "--$key";
                 my $v = $args{$key};

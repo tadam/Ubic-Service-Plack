@@ -5,18 +5,26 @@ use warnings;
 
 use Test::More tests => 4;
 
-use lib 'lib';
+BEGIN {
+    use Config;
+    use File::Which;
+
+    my $perl = $Config{perlpath};
+    my $plackup = which('plackup');
+    $ENV{'UBIC_SERVICE_PLACKUP_BIN'} = "$perl $plackup";
+}
 
 system('rm -rf tfiles') and die "Can't remove tfiles: $!";
 system('mkdir tfiles') and die "Can't create tfiles: $!";
 
-use Ubic::Service::Plack;
 use LWP::Simple;
+use Ubic::Service::Plack;
 
 my $port = 5001;
+
 my $service = Ubic::Service::Plack->new({
     server => 'Standalone',
-    port => 5001,
+    port => $port,
     app => 't/bin/test.psgi',
     app_name => 'test_psgi',
     status => sub {
