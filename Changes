@@ -1,6 +1,8 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+
+1.13    Wed Jul 13, 2011
         * Compatible with new ubic 'default user' feature
         * Support arrayref values in server_args
         * Support single-letter keys in server_args
