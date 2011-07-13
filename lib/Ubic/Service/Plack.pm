@@ -127,11 +127,21 @@ sub new {
     return bless $params => $class;
 }
 
+=item C<pidfile()>
+
+Get pidfile name.
+
+=cut
 sub pidfile {
     my $self = shift;
     return $self->{pidfile};
 }
 
+=item C<bin()>
+
+Get command-line with all arguments in the arrayref form.
+
+=cut
 sub bin {
     my $self = shift;
 
