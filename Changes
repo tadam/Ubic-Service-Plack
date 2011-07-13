@@ -1,6 +1,7 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+        Compatible with new ubic 'default user' feature
 
 1.12    Sun Nov 07, 2010
         Pass 'port' option to plackup.

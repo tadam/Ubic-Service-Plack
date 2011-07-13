@@ -160,7 +160,7 @@ sub new {
                 return 'running';
             }
         },
-        user => $params->{user} || 'root',
+        ($params->{user} ? (user => $params->{user}) : ()),
         timeout_options => { start => { trials => 15, step => 0.1 }, stop => { trials => 15, step => 0.1 } },
     };
 
