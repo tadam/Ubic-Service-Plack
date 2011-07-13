@@ -123,56 +123,87 @@ sub new {
         pidfile     => { type => SCALAR, optional => 1 },
     });
 
-    my $pidfile = $params->{pidfile} || "/tmp/$params->{app_name}.pid";
-
-    my $options = {
-        start => sub {
-            my %args = (
-                $class->defaults,
-                server => $params->{server},
-                ($params->{port} ? (port => $params->{port}) : ()),
-                %{$params->{server_args}},
-            );
-            my @cmd = split(/\s+/, $plackup_command);
-            foreach my $key (keys %args) {
-                push @cmd, "--$key";
-                my $v = $args{$key};
-                push @cmd, $v if defined($v);
-            }
-            push @cmd, $params->{app};
-
-            my $daemon_opts = { bin => \@cmd, pidfile => $pidfile, term_timeout => 5 };
-            for (qw/ubic_log stdout stderr/) {
-                $daemon_opts->{$_} = $params->{$_} if $params->{$_};
-            }
-            start_daemon($daemon_opts);
-            return;
-        },
-        stop => sub {
-            return stop_daemon($pidfile, { timeout => 7 });
-        },
-        status => sub {
-            my $running = check_daemon($pidfile);
-            return 'not running' unless ($running);
-            if ($params->{status}) {
-                return $params->{status}->();
-            } else {
-                return 'running';
-            }
-        },
-        ($params->{user} ? (user => $params->{user}) : ()),
-        timeout_options => { start => { trials => 15, step => 0.1 }, stop => { trials => 15, step => 0.1 } },
-    };
-
-    if ($params->{port}) {
-        $options->{port} = $params->{port};
-    }
-
-    my $self = $class->SUPER::new($options);
-
-    return $self;
+    $params->{pidfile} ||= "/tmp/$params->{app_name}.pid";
+    return bless $params => $class;
 }
 
+sub pidfile {
+    my $self = shift;
+    return $self->{pidfile};
+}
+
+sub bin {
+    my $self = shift;
+
+    my @cmd = split(/\s+/, $plackup_command);
+
+    my %args = (
+        server => $self->{server},
+        ($self->{port} ? (port => $self->{port}) : ()),
+        $self->defaults,
+        %{$self->{server_args}},
+    );
+    for my $key (keys %args) {
+        my $cmd_key = (length $key == 1) ? '-' : '--';
+        $cmd_key .= $key;
+        my $v = $args{$key};
+        next unless defined $v;
+        if (ref $v eq 'ARRAY') {
+            for my $value (@$v) {
+                push @cmd, $cmd_key, $value;
+            }
+        }
+        else {
+            push @cmd, $cmd_key, $v;
+        }
+    }
+    push @cmd, $self->{app};
+    return \@cmd;
+}
+
+sub start_impl {
+    my $self = shift;
+
+    my $daemon_opts = { bin => $self->bin, pidfile => $self->pidfile, term_timeout => 5 };
+    for (qw/ubic_log stdout stderr/) {
+        $daemon_opts->{$_} = $self->{$_} if defined $self->{$_};
+    }
+    start_daemon($daemon_opts);
+    return;
+}
+
+sub stop_impl {
+    my $self = shift;
+    return stop_daemon($self->pidfile, { timeout => 7 });
+}
+
+sub status_impl {
+    my $self = shift;
+    my $running = check_daemon($self->pidfile);
+    return 'not running' unless ($running);
+    if ($self->{status}) {
+        return $self->{status}->();
+    } else {
+        return 'running';
+    }
+}
+
+sub user {
+    my $self = shift;
+    return $self->{user} if defined $self->{user};
+    return $self->SUPER::user;
+};
+
+sub timeout_options {
+    return { start => { trials => 15, step => 0.1 }, stop => { trials => 15, step => 0.1 } };
+}
+
+sub port {
+    my $self = shift;
+    # we should leave only one of these, but I can't decide which one -- mmcleric
+    return $self->{port} if defined $self->{port};
+    return $self->{server_args}{port};
+}
 
 =for Pod::Coverage defaults
 
@@ -189,4 +220,3 @@ Some kind of basic HTTP/socket (depending on server type) ping in status phase w
 =cut
 
 1;
-
