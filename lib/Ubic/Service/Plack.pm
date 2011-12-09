@@ -32,13 +32,12 @@ This service is a common ubic wrap for psgi applications. It uses plackup for ru
 
 =cut
 
-use base qw(Ubic::Service::Common);
+use base qw(Ubic::Service::Skeleton);
 
 use Params::Validate qw(:all);
 use Plack;
 
 use Ubic::Daemon qw(:all);
-use Ubic::Service::Common;
 
 =head1 METHODS
 
