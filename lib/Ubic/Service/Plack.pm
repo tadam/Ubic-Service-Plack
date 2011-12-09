@@ -17,7 +17,6 @@ Ubic::Service::Plack - ubic service base class for psgi applications
         server_args => { listen => "/tmp/app.sock",
                          nproc  => 5 },
         app      => "/var/www/app.psgi",
-        app_name => 'app',
         status   => sub { ... },
         port     => 4444,
         ubic_log => '/var/log/app/ubic.log',
@@ -28,7 +27,8 @@ Ubic::Service::Plack - ubic service base class for psgi applications
 
 =head1 DESCRIPTION
 
-This service is a common ubic wrap for psgi applications. It uses plackup for running these applications.
+This service is a common ubic wrap for psgi applications.
+It uses plackup for running these applications.
 
 =cut
 
@@ -56,8 +56,9 @@ You can pass this param in both variants, for example 'Plack::Handler::FCGI' or 
 
 =item I<server_args> (optional)
 
-Hashref with options that will passed to concrete Plack server specified by C<server> param. See concrete server docimentation for possible options.
-You can also pass here such options as 'env' to override defaults. In this case you must use long option names ('env' insted of 'E').
+Hashref with options that will be passed to concrete Plack server specified by C<server> param.
+See concrete server docimentation for possible options.
+You can also pass here such options as 'env' to override defaults.
 
 =item I<app>
 
@@ -69,7 +70,7 @@ Coderef to special function, that will check status of your application.
 
 =item I<port> (optional)
 
-Port on which your application works. Ubic-ping will use this info for HTTP status checking of your application.
+Port on which your application works. C<ubic.ping> will use this info for HTTP status checking of your application.
 
 =item I<ubic_log> (optional)
 
@@ -85,11 +86,11 @@ Path to stderr log of plackup.
 
 =item I<user> (optional)
 
-User name. If specified, real and effective user identifiers will be changed before execing any psgi applications.
+User under which plackup will be started.
 
 =item I<group>
 
-Group under which daemon will be started. Optional, default is all user groups.
+Group under which plackup will be started. Optional, default is all user groups.
 
 =item I<pidfile> (optional)
 
