@@ -52,11 +52,13 @@ Parameters (mandatory if not specified otherwise):
 =item I<server>
 
 Server name from Plack::Server::* or Plack::Handler::* namespace.
-You can pass this param in both variants, for example 'Plack::Handler::FCGI' or just 'FCGI'.
+You can pass this param in both variants, for example 'Plack::Handler::FCGI' or
+just 'FCGI'.
 
 =item I<server_args> (optional)
 
-Hashref with options that will be passed to concrete Plack server specified by C<server> param.
+Hashref with options that will be passed to concrete Plack server specified by
+C<server> param.
 See concrete server docimentation for possible options.
 You can also pass here such options as 'env' to override defaults.
 
@@ -70,7 +72,8 @@ Coderef to special function, that will check status of your application.
 
 =item I<port> (optional)
 
-Port on which your application works. C<ubic.ping> will use this info for HTTP status checking of your application.
+Port on which your application works. C<ubic.ping> will use this info for HTTP
+status checking of your application.
 
 =item I<ubic_log> (optional)
 
@@ -98,7 +101,8 @@ Change working directory before starting a daemon. Optional.
 
 =item I<env>
 
-Modify environment before starting a daemon. Optional. Must be a plain hashref if specified.
+Modify environment before starting a daemon. Optional. Must be a plain hashref
+if specified.
 
 =item I<pidfile> (optional)
 
@@ -117,7 +121,8 @@ I<pidfile> option value, if provided;
 
 =item *
 
-C</tmp/APP_NAME.pid>, where APP_NAME is I<app_name> option value, if it's provided;
+C</tmp/APP_NAME.pid>, where APP_NAME is I<app_name> option value, if it's
+provided;
 
 =item *
 
@@ -129,7 +134,8 @@ C</tmp/SERVICE_NAME.pid>, where SERVICE_NAME is service's full name.
 
 Name of your application. DEPRECATED.
 
-It was used in older releases for constructing the path for storing pid-file of your app).
+It was used in older releases for constructing the path for storing pid-file of
+your app).
 
 =back
 
@@ -211,7 +217,11 @@ sub bin {
 sub start_impl {
     my $self = shift;
 
-    my $daemon_opts = { bin => $self->bin, pidfile => $self->pidfile, term_timeout => 5 };
+    my $daemon_opts = {
+        bin => $self->bin,
+        pidfile => $self->pidfile,
+        term_timeout => 5, # TODO - configurable?
+    };
     for (qw/ env cwd stdout stderr ubic_log /) {
         $daemon_opts->{$_} = $self->{$_} if defined $self->{$_};
     }
@@ -250,12 +260,17 @@ sub group {
 }
 
 sub timeout_options {
-    return { start => { trials => 15, step => 0.1 }, stop => { trials => 15, step => 0.1 } };
+    # TODO - make them customizable
+    return {
+        start => { trials => 15, step => 0.1 },
+        stop => { trials => 15, step => 0.1 },
+    };
 }
 
 sub port {
     my $self = shift;
-    # we should leave only one of these, but I can't decide which one -- mmcleric
+    # we should leave only one of these, but I can't decide which one
+    # -- mmcleric
     return $self->{port} if defined $self->{port};
     return $self->{server_args}{port};
 }
@@ -270,7 +285,8 @@ sub defaults {
 
 =head1 FUTURE DIRECTIONS
 
-Some kind of basic HTTP/socket (depending on server type) ping in status phase would be handy.
+Some kind of basic HTTP/socket (depending on server type) ping in status phase
+would be handy.
 
 =cut
 
