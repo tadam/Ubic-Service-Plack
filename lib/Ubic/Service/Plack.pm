@@ -92,6 +92,14 @@ User under which plackup will be started.
 
 Group under which plackup will be started. Optional, default is all user groups.
 
+=item I<cwd>
+
+Change working directory before starting a daemon. Optional.
+
+=item I<env>
+
+Modify environment before starting a daemon. Optional. Must be a plain hashref if specified.
+
 =item I<pidfile> (optional)
 
 Pidfile for C<Ubic::Daemon> module.
@@ -147,6 +155,8 @@ sub new {
         stdout      => { type => SCALAR, optional => 1 },
         stderr      => { type => SCALAR, optional => 1 },
         pidfile     => { type => SCALAR, optional => 1 },
+        cwd => { type => SCALAR, optional => 1 },
+        env => { type => HASHREF, optional => 1 },
     });
 
     return bless $params => $class;
@@ -202,7 +212,7 @@ sub start_impl {
     my $self = shift;
 
     my $daemon_opts = { bin => $self->bin, pidfile => $self->pidfile, term_timeout => 5 };
-    for (qw/ubic_log stdout stderr/) {
+    for (qw/ env cwd stdout stderr ubic_log /) {
         $daemon_opts->{$_} = $self->{$_} if defined $self->{$_};
     }
     start_daemon($daemon_opts);
