@@ -92,6 +92,10 @@ Path to stderr log of plackup.
 
 User name. If specified, real and effective user identifiers will be changed before execing any psgi applications.
 
+=item I<group>
+
+Group under which daemon will be started. Optional, default is all user groups.
+
 =item I<pidfile> (optional)
 
 Pidfile for C<Ubic::Daemon> module.
@@ -115,6 +119,7 @@ sub new {
         app_name    => { type => SCALAR },
         server_args => { type => HASHREF, default => {} },
         user        => { type => SCALAR, optional => 1 },
+        group       => { type => SCALAR | ARRAYREF, optional => 1 },
         status      => { type => CODEREF, optional => 1 },
         port        => { type => SCALAR, regex => qr/^\d+$/, optional => 1 },
         ubic_log    => { type => SCALAR, optional => 1 },
@@ -203,6 +208,14 @@ sub user {
     return $self->{user} if defined $self->{user};
     return $self->SUPER::user;
 };
+
+sub group {
+    my $self = shift;
+    my $groups = $self->{group};
+    return $self->SUPER::group() if not defined $groups;
+    return @$groups if ref $groups eq 'ARRAY';
+    return $groups;
+}
 
 sub timeout_options {
     return { start => { trials => 15, step => 0.1 }, stop => { trials => 15, step => 0.1 } };
