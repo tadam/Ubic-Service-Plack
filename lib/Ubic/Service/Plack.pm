@@ -63,10 +63,6 @@ You can also pass here such options as 'env' to override defaults. In this case 
 
 Path to .psgi app.
 
-=item I<app_name>
-
-Name of your application (uses for constructing path for storing pid-file of your app).
-
 =item I<status> (optional)
 
 Coderef to special function, that will check status of your application.
@@ -99,7 +95,32 @@ Group under which daemon will be started. Optional, default is all user groups.
 
 Pidfile for C<Ubic::Daemon> module.
 
-If not specified, it will be derived from I<app_name>.
+If not specified, it will be derived from service's name or from I<app_name>,
+if provided.
+
+Pidfile is:
+
+=over
+
+=item *
+
+I<pidfile> option value, if provided;
+
+=item *
+
+C</tmp/APP_NAME.pid>, where APP_NAME is I<app_name> option value, if it's provided;
+
+=item *
+
+C</tmp/SERVICE_NAME.pid>, where SERVICE_NAME is service's full name.
+
+=back
+
+=item I<app_name>
+
+Name of your application. DEPRECATED.
+
+It was used in older releases for constructing the path for storing pid-file of your app).
 
 =back
 
@@ -115,7 +136,7 @@ sub new {
     my $params = validate(@_, {
         server      => { type => SCALAR },
         app         => { type => SCALAR },
-        app_name    => { type => SCALAR },
+        app_name    => { type => SCALAR, optional => 1 },
         server_args => { type => HASHREF, default => {} },
         user        => { type => SCALAR, optional => 1 },
         group       => { type => SCALAR | ARRAYREF, optional => 1 },
@@ -127,7 +148,6 @@ sub new {
         pidfile     => { type => SCALAR, optional => 1 },
     });
 
-    $params->{pidfile} ||= "/tmp/$params->{app_name}.pid";
     return bless $params => $class;
 }
 
@@ -138,7 +158,9 @@ Get pidfile name.
 =cut
 sub pidfile {
     my $self = shift;
-    return $self->{pidfile};
+    return $self->{pidfile} if defined $self->{pidfile};
+    return "/tmp/$self->{app_name}.pid" if defined $self->{app_name};
+    return "/tmp/".$self->full_name.".pid";
 }
 
 =item C<bin()>

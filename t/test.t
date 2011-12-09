@@ -5,7 +5,7 @@ use warnings;
 
 use lib 'lib';
 
-use Test::More tests => 7;
+use Test::More tests => 10;
 
 our ($perl, $plackup);
 BEGIN {
@@ -99,4 +99,46 @@ use Ubic::Service::Plack;
         app_name => 'test_psgi',
     });
     is($service->port, 1234, 'port from top-level port');
+}
+
+# pidfile
+{
+    my $service = Ubic::Service::Plack->new({
+        server => 'Starman',
+        app => 't/bin/test.psgi',
+    });
+    $service->name('bar');
+    $service->parent_name('foo');
+
+    is
+        $service->pidfile,
+        '/tmp/foo.bar.pid',
+        "pidfile() when neither 'pidfile' nor 'app_name' options are set";
+
+    $service = Ubic::Service::Plack->new({
+        server => 'Starman',
+        app => 't/bin/test.psgi',
+        app_name => 'blah',
+    });
+    $service->name('bar');
+    $service->parent_name('foo');
+
+    is
+        $service->pidfile,
+        '/tmp/blah.pid',
+        "pidfile() when 'app_name' option is set";
+
+    $service = Ubic::Service::Plack->new({
+        server => 'Starman',
+        app => 't/bin/test.psgi',
+        pidfile => '/var/tmp/blah.pid',
+        app_name => 'blah',
+    });
+    $service->name('bar');
+    $service->parent_name('foo');
+
+    is
+        $service->pidfile,
+        '/var/tmp/blah.pid',
+        "pidfile() when both 'pidfile' and 'app_name' options are set ('pidfile' wins)";
 }
