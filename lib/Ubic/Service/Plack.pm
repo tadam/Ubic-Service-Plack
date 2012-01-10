@@ -91,18 +91,18 @@ Path to stderr log of plackup.
 
 User under which plackup will be started.
 
-=item I<group>
+=item I<group> (optional)
 
-Group under which plackup will be started. Optional, default is all user groups.
+Group under which plackup will be started. Default is all user groups.
 
-=item I<cwd>
+=item I<cwd> (optional)
 
-Change working directory before starting a daemon. Optional.
+Change working directory before starting a daemon.
 
-=item I<env>
+=item I<env> (optional)
 
-Modify environment before starting a daemon. Optional. Must be a plain hashref
-if specified.
+Modify environment before starting a daemon. Must be a plain hashref if
+specified.
 
 =item I<pidfile> (optional)
 
