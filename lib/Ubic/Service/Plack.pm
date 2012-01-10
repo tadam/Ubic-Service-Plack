@@ -139,8 +139,6 @@ your app).
 
 =back
 
-=back
-
 =cut
 
 my $plackup_command = $ENV{'UBIC_SERVICE_PLACKUP_BIN'} || 'plackup';
@@ -278,10 +276,11 @@ sub port {
 =for Pod::Coverage defaults
 
 =cut
-
 sub defaults {
     return ();
 }
+
+=back
 
 =head1 FUTURE DIRECTIONS
 

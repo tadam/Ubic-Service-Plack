@@ -5,9 +5,7 @@ use warnings;
 
 use base qw(Ubic::Service::Plack);
 
-=head1 NAME
-
-Ubic::Service::PSGI - deprecated module, see Ubic::Service::Plack instead
+# ABSTRACT: deprecated module, see Ubic::Service::Plack instead
 
 =head1 DESCRIPTION
 
