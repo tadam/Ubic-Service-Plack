@@ -1,6 +1,9 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+        * group, env and cmd options
+        * deprecate app_name option, derive pidfile from service's full_name
+        * improve and cleanup docs
 
 1.13    Wed Jul 13, 2011
         * Compatible with new ubic 'default user' feature
