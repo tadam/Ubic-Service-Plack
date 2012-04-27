@@ -135,7 +135,7 @@ C</tmp/SERVICE_NAME.pid>, where SERVICE_NAME is service's full name.
 Name of your application. DEPRECATED.
 
 It was used in older releases for constructing the path for storing pid-file of
-your app).
+your app.
 
 =back
 
