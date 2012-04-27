@@ -45,66 +45,66 @@ use Ubic::Daemon qw(:all);
 
 =item C<new($params)>
 
-Parameters (mandatory if not specified otherwise):
+Parameters (optional if not specified otherwise):
 
 =over
 
-=item I<server>
+=item I<app> (mandatory)
+
+Path to .psgi app.
+
+=item I<server> (mandatory)
 
 Server name from Plack::Server::* or Plack::Handler::* namespace.
 You can pass this param in both variants, for example 'Plack::Handler::FCGI' or
 just 'FCGI'.
 
-=item I<server_args> (optional)
+=item I<server_args>
 
 Hashref with options that will be passed to concrete Plack server specified by
 C<server> param.
 See concrete server docimentation for possible options.
 You can also pass here such options as 'env' to override defaults.
 
-=item I<app>
-
-Path to .psgi app.
-
-=item I<status> (optional)
+=item I<status>
 
 Coderef to special function, that will check status of your application.
 
-=item I<port> (optional)
+=item I<port>
 
 Port on which your application works. C<ubic.ping> will use this info for HTTP
 status checking of your application.
 
-=item I<ubic_log> (optional)
+=item I<ubic_log>
 
 Path to ubic log.
 
-=item I<stdout> (optional)
+=item I<stdout>
 
 Path to stdout log of plackup.
 
-=item I<stderr> (optional)
+=item I<stderr>
 
 Path to stderr log of plackup.
 
-=item I<user> (optional)
+=item I<user>
 
 User under which plackup will be started.
 
-=item I<group> (optional)
+=item I<group>
 
 Group under which plackup will be started. Default is all user groups.
 
-=item I<cwd> (optional)
+=item I<cwd>
 
 Change working directory before starting a daemon.
 
-=item I<env> (optional)
+=item I<env>
 
 Modify environment before starting a daemon. Must be a plain hashref if
 specified.
 
-=item I<pidfile> (optional)
+=item I<pidfile>
 
 Pidfile for C<Ubic::Daemon> module.
 
