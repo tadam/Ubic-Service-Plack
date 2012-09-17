@@ -1,3 +1,21 @@
+libubic-service-plack-perl (1.14) unstable; urgency=low
+
+ * group, env and cmd options
+ * deprecate app_name option, derive pidfile from service's full_name
+ * improve and cleanup docs
+
+ -- Vyacheslav Matjukhin (No comments) <mmcleric@yandex-team.ru>  Tue, 10 Jan 2012 00:00:00 +0300
+
+libubic-service-plack-perl (1.13) unstable; urgency=low
+
+ * Compatible with new ubic 'default user' feature
+ * Support arrayref values in server_args
+ * Support single-letter keys in server_args
+ * bin() method, pidfile() method, refactor to use
+   Ubic::Service::Skeleton instead of Ubic::Service::Common
+
+ -- Vyacheslav Matjukhin (No comments) <mmcleric@yandex-team.ru>  Wed, 13 Jul 2011 00:00:00 +0300
+
 libubic-service-plack-perl (1.12) unstable; urgency=low
 
   * Pass 'port' option to plackup.
