@@ -1,6 +1,9 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+        * minor POD improvements
+        * don't package debian/ into CPAN distribution
+        * fix cwd test on OS X
 
 1.14    Tue Jan 10, 2012
         * group, env and cmd options

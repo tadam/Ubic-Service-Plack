@@ -167,16 +167,16 @@ use Ubic::Service::Plack;
         stderr => 'tfiles/stderr.log',
         user => $ENV{LOGNAME},
         pidfile => 'tfiles/test_psgi.pid',
-        cwd => '/tmp',
+        cwd => cwd.'/tfiles',
         env => { XXX => 111 },
     });
 
     $service->start;
     is($service->status, 'running', 'start works');
 
-    is
+    like
         get("http://localhost:$port/cwd"),
-        'cwd: /tmp',
+        qr{cwd: .*/tfiles$},
         'cwd option';
 
     is
