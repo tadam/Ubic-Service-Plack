@@ -121,8 +121,18 @@ I<pidfile> option value, if provided;
 
 =item *
 
+C</tmp/APP_NAME_USER.pid>, where APP_NAME is I<app_name> option value
+and USER is I<user> option value, if both are provided;
+
+=item *
+
 C</tmp/APP_NAME.pid>, where APP_NAME is I<app_name> option value, if it's
 provided;
+
+=item *
+
+C</tmp/SERVICE_NAME_USER.pid>, where SERVICE_NAME is service's full name
+and USER is I<user> option value, if provided;
 
 =item *
 
@@ -174,7 +184,9 @@ Get pidfile name.
 sub pidfile {
     my $self = shift;
     return $self->{pidfile} if defined $self->{pidfile};
+    return "/tmp/$self->{app_name}_$self->{user}.pid" if defined $self->{user} and $self->{app_name};
     return "/tmp/$self->{app_name}.pid" if defined $self->{app_name};
+    return "/tmp/".$self->full_name."_$self->{user}.pid" if $self->{user};
     return "/tmp/".$self->full_name.".pid";
 }
 
