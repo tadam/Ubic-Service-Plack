@@ -1,6 +1,7 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+        * reformat change log as per CPAN::Changes::Spec (by Sergey Romanov)
 
 1.15    2012-10-14
         * minor POD improvements
