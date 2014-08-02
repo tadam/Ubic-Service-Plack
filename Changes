@@ -1,6 +1,7 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+        * support proxy_logs param
 
 1.16    2013-08-03
         * reformat change log as per CPAN::Changes::Spec (by Sergey Romanov)
