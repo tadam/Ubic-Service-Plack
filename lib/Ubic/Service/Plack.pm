@@ -87,6 +87,12 @@ Path to stdout log of plackup.
 
 Path to stderr log of plackup.
 
+=item I<proxy_logs>
+
+Boolean flag. If enabled, C<ubic-guardian> will replace daemon's stdout and
+stderr filehandles with pipes, proxy all data to the log files, and reopen
+them on C<SIGHUP>.
+
 =item I<user>
 
 User under which plackup will be started.
@@ -158,6 +164,7 @@ sub new {
         ubic_log    => { type => SCALAR, optional => 1 },
         stdout      => { type => SCALAR, optional => 1 },
         stderr      => { type => SCALAR, optional => 1 },
+        proxy_logs  => { type => BOOLEAN, optional => 1 },
         pidfile     => { type => SCALAR, optional => 1 },
         cwd => { type => SCALAR, optional => 1 },
         env => { type => HASHREF, optional => 1 },
@@ -220,7 +227,7 @@ sub start_impl {
         pidfile => $self->pidfile,
         term_timeout => 5, # TODO - configurable?
     };
-    for (qw/ env cwd stdout stderr ubic_log /) {
+    for (qw/ env cwd stdout stderr ubic_log /, ($Ubic::VERSION gt '1.48' ? 'proxy_logs' : ())) {
         $daemon_opts->{$_} = $self->{$_} if defined $self->{$_};
     }
     start_daemon($daemon_opts);
