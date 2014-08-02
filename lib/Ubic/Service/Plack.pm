@@ -227,7 +227,7 @@ sub start_impl {
         pidfile => $self->pidfile,
         term_timeout => 5, # TODO - configurable?
     };
-    for (qw/ env cwd stdout stderr ubic_log /, ($Ubic::VERSION gt '1.48' ? 'proxy_logs' : ())) {
+    for (qw/ env cwd stdout stderr ubic_log /, ($Ubic::Daemon::VERSION gt '1.48' ? 'proxy_logs' : ())) {
         $daemon_opts->{$_} = $self->{$_} if defined $self->{$_};
     }
     start_daemon($daemon_opts);

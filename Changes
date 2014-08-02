@@ -1,6 +1,7 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+        * bugfix - check Ubic::Daemon's version instead of Ubic's.
 
 1.17    2014-08-03
         * support proxy_logs param
