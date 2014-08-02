@@ -1,6 +1,8 @@
 Revision history for Ubic-Service-Plack
 
 {{$NEXT}}
+
+1.18    2014-08-03
         * bugfix - check Ubic::Daemon's version instead of Ubic's.
 
 1.17    2014-08-03
