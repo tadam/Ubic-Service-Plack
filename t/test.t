@@ -15,8 +15,8 @@ BEGIN {
     use File::Which;
 
     $perl = $Config{perlpath};
-    $plackup = which('plackup');
-    $ENV{'UBIC_SERVICE_PLACKUP_BIN'} = "$perl $plackup";
+    $plackup = which('plackup') || '';
+    $ENV{'UBIC_SERVICE_PLACKUP_BIN'} = "$perl $plackup" if $plackup;
 }
 
 system('rm -rf tfiles') and die "Can't remove tfiles: $!";
