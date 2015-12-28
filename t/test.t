@@ -14,9 +14,19 @@ BEGIN {
     use Config;
     use File::Which;
 
-    $perl = $Config{perlpath};
-    $plackup = which('plackup');
-    $ENV{'UBIC_SERVICE_PLACKUP_BIN'} = "$perl $plackup";
+    if (exists $ENV{'UBIC_SERVICE_PLACKUP_BIN'}) {
+        $plackup = $ENV{'UBIC_SERVICE_PLACKUP_BIN'};
+    }
+    else {
+        $perl = $Config{perlpath};
+        $plackup = which('plackup')
+            or BAIL_OUT(
+                 "Cannot find plackup binary in your PATH ($ENV{PATH}).\n"
+               . 'Please set it under the UBIC_SERVICE_PLACKUP_BIN environment variable.'
+               . ' Aborting...'
+            );
+        $ENV{'UBIC_SERVICE_PLACKUP_BIN'} = "$perl $plackup";
+    }
 }
 
 system('rm -rf tfiles') and die "Can't remove tfiles: $!";
@@ -76,7 +86,7 @@ use Ubic::Service::Plack;
 
     is_deeply(
         [ sort @{ $service->bin }],
-        [ sort($perl, $plackup, '--server', 'Starman', '-M', 'Foo', '-M', 'Bar', '--port', 1234, 't/bin/test.psgi') ],
+        [ sort(($perl || ()), $plackup, '--server', 'Starman', '-M', 'Foo', '-M', 'Bar', '--port', 1234, 't/bin/test.psgi') ],
         'bin generated correctly'
     );
 }
