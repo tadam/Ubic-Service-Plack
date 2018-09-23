@@ -205,14 +205,23 @@ sub bin {
         my $cmd_key = (length $key == 1) ? '-' : '--';
         $cmd_key .= $key;
         my $v = $args{$key};
-        next unless defined $v;
         if (ref $v eq 'ARRAY') {
             for my $value (@$v) {
-                push @cmd, $cmd_key, $value;
+                if (defined $value) {
+                    push @cmd, $cmd_key, $value;
+                }
+                else {
+                    push @cmd, $cmd_key;
+                }
             }
         }
         else {
-            push @cmd, $cmd_key, $v;
+            if (defined $v) {
+                push @cmd, $cmd_key, $v;
+            }
+            else {
+                push @cmd, $cmd_key;
+            }
         }
     }
     push @cmd, $self->{app};
